@@ -1,5 +1,7 @@
 import {
   Box,
+  Image,
+  Text,
   Button,
   Container,
   Heading,
@@ -10,6 +12,7 @@ import {
 import React, { useState } from 'react'
 import { useGetFruits } from './services/search'
 import CartItem from './components/CartItem'
+import CompassImage from './images/compass.png';
 
 function Search() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -77,17 +80,27 @@ function Search() {
       <br />
 
       <Box>
-        {cartItems.map((item) => (
-          <CartItem
-            key={item.id}
-            name={item.name}
-            quantity={item.quantity}
-            onIncrement={() => handleIncrement(item.id)}
-            onDecrement={() => handleDecrement(item.id)}
-          />
-        ))}
+        {cartItems.length > 0 ? (
+          cartItems.map((item) => (
+            <CartItem
+              key={item.id}
+              name={item.name}
+              quantity={item.quantity}
+              onIncrement={() => handleIncrement(item.id)}
+              onDecrement={() => handleDecrement(item.id)}
+            />
+          ))
+        ) : (
+          <Box textAlign="center" display="flex" flexDirection="column" alignItems="center" mt={40}>
+            <Image src={CompassImage} alt="Empty Cart" />
+            <Text mt={4} fontSize="lg" fontWeight="bold">
+              No products added to the cart.
+            </Text>
+          </Box>
+        )}
       </Box>
     </Container>
+
   )
 }
 
